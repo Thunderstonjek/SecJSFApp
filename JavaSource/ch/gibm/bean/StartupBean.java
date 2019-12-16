@@ -9,6 +9,7 @@ import ch.gibm.dao.UserDAO;
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
 import ch.gibm.facade.UserFacade;
+import ch.gibm.util.Hashers;
 
 @ApplicationScoped
 @ManagedBean(eager = true)
@@ -23,11 +24,11 @@ public class StartupBean {
 
 		// Create dummy ADMIN user if not exist
 		UserFacade facade = new UserFacade();
-		User u = facade.getUserIfExists("admin", "admin");
+		User u = facade.getUserIfExists("admin", Hashers.md5("admin"));
 		if (u == null) {
 			UserDAO dao = new UserDAO();
 			EntityManagerHelper.beginTransaction();
-			dao.save(new User("admin", "admin", Role.ADMIN));
+			dao.save(new User("admin", Hashers.md5("admin"), Role.ADMIN));
 			EntityManagerHelper.commitAndCloseTransaction();
 		}
 	}

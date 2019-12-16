@@ -15,8 +15,7 @@ Also write down how to get the project running on a new workbench/environment, b
 5. pray
 
 # Admin Login
-Username: admin
-Password: admin
+see StartupBean.java
 
 # To keep in mind upon finishing the project:
 - everything necessary to get the project running needs to be in the project

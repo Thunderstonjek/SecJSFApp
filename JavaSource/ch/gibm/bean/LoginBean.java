@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
 import ch.gibm.facade.UserFacade;
+import ch.gibm.util.Hashers;
 
 @ManagedBean
 @RequestScoped
@@ -27,7 +28,7 @@ public class LoginBean extends AbstractBean {
 
 		// HACK
 		// you have to implement a safe login mechanism
-		User user = userFacade.getUserIfExists(this.username, this.password);
+		User user = userFacade.getUserIfExists(this.username, Hashers.md5(this.password));
 
 		if (user != null) {
 			userBean.setLoggedInUser(user);
