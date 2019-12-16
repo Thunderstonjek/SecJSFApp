@@ -13,3 +13,12 @@ Also write down how to get the project running on a new workbench/environment, b
 3. switch to Java EE and configure build patch to include all .jar files from the tomcat directory
 4. select project to run on server and manually select the Tomcat v9.0
 5. pray
+
+# Admin Login
+Username: admin
+Password: admin
+
+# To keep in mind upon finishing the project:
+- everything necessary to get the project running needs to be in the project
+- that includes userdata from the MySQL database
+- also any authorization data: MySQL logins and JSFApp admin logins

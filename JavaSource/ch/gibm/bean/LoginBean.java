@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
+import ch.gibm.facade.UserFacade;
 
 @ManagedBean
 @RequestScoped
@@ -19,17 +20,15 @@ public class LoginBean extends AbstractBean {
 
 	private String username;
 	private String password;
+	
+	UserFacade userFacade = new UserFacade();
 
 	public String login() {
 
-		// HACK: when username is admin, login as admin user
+		// HACK
 		// you have to implement a safe login mechanism
-		User user = null;
+		User user = userFacade.getUserIfExists(this.username, this.password);
 
-		if (username.equals("admin")) {
-			user = new User("admin", "12345678", Role.ADMIN);
-			user.setEmail("admin@gibmit.ch");
-		}
 		if (user != null) {
 			userBean.setLoggedInUser(user);
 			FacesContext context = FacesContext.getCurrentInstance();

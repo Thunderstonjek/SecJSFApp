@@ -9,11 +9,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name="User.findUserByUsernamePwd", query= "select u from User u where u.username = :username and u.password = :password")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	public static final String FIND_BY_USERNAMEPWD = "User.findUserByUsernamePwd";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
