@@ -12,14 +12,7 @@
 			<h:form id="profileForm">
 				<p:dataTable id="currentUserTable" value="#{userBean.loggedInUser}" var="user" paginator="false">
 				
-					<p:column width="15%">
-						<f:facet name="header">
-							<h:outputText value="#{bundle.userName}" />
-						</f:facet>
-						<h:outputText value="#{user.username}" />
-					</p:column>
-					
-					<p:column width="20%">
+					<p:column width="35%">
 						<f:facet name="header">
 							<h:outputText value="#{bundle.userMail}" />
 						</f:facet>

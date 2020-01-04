@@ -12,12 +12,12 @@ public class UserDAO extends GenericDAO<User> {
 		super(User.class);
 	}
 	
-	public User findUserIfExists(String username, String password) {
+	public User findUserIfExists(String email, String password) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("username", username);
+		parameters.put("email", email);
 		parameters.put("password", password);
 
-		return super.findOneResult(User.FIND_BY_USERNAMEPWD, parameters);	
+		return super.findOneResult(User.FIND_BY_EMAILPWD, parameters);	
 	}
 
 	//...

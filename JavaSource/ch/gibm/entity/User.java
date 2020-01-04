@@ -12,18 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name="User.findUserByUsernamePwd", query= "select u from User u where u.username = :username and u.password = :password")
+// @NamedQuery(name="User.findUserByEmailPwd", query= "select u from User u where u.email = :email and u.password = :password")
+@NamedQuery(name="User.findUserByEmailSaltedpwd", query= "select u from User u where u.email = :email and SUBSTRING(u.password, 17, 64) = SHA2(CONCAT(SUBSTRING(u.password, 1, 16), :password), 256)")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public static final String FIND_BY_USERNAMEPWD = "User.findUserByUsernamePwd";
+	//public static final String FIND_BY_EMAILPWD = "User.findUserByEmailPwd";
+	public static final String FIND_BY_EMAILPWD = "User.findUserByEmailSaltedpwd";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(unique = true)
-	private String username;
-
 	private String email;
 
 	private String password;
@@ -34,8 +34,8 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public User(String userName, String password, Role role) {
-		this.username = userName;
+	public User(String email, String password, Role role) {
+		this.email = email;
 		this.password = password;
 		this.role = role;
 	}
@@ -46,14 +46,6 @@ public class User implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -82,7 +74,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return this.id;
+		return getId();
 	}
 
 	@Override
@@ -96,6 +88,6 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.username;
+		return getEmail();
 	}
 }

@@ -19,7 +19,7 @@ public class LoginBean extends AbstractBean {
 	@ManagedProperty(value = UserBean.DI_NAME)
 	private UserBean userBean;
 
-	private String username;
+	private String email;
 	private String password;
 	
 	UserFacade userFacade = new UserFacade();
@@ -28,7 +28,7 @@ public class LoginBean extends AbstractBean {
 
 		// HACK
 		// you have to implement a safe login mechanism
-		User user = userFacade.getUserIfExists(this.username, Hashers.md5(this.password));
+		User user = userFacade.getUserIfExists(this.email, this.password);
 
 		if (user != null) {
 			userBean.setLoggedInUser(user);
@@ -39,18 +39,18 @@ public class LoginBean extends AbstractBean {
 			
 		} else {
 			keepDialogOpen();
-			displayErrorMessageToUser("Wrong Username/Password. Try again");
+			displayErrorMessageToUser("Wrong Email/Password. Try again");
 			
 		}
 		return null;
 	}
 
-	public String getUserName() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.username = userName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
