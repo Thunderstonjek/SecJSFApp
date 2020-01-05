@@ -14,10 +14,12 @@ import javax.persistence.NamedQuery;
 @Entity
 // @NamedQuery(name="User.findUserByEmailPwd", query= "select u from User u where u.email = :email and u.password = :password")
 @NamedQuery(name="User.findUserByEmailSaltedpwd", query= "select u from User u where u.email = :email and SUBSTRING(u.password, 17, 64) = SHA2(CONCAT(SUBSTRING(u.password, 1, 16), :password), 256)")
+@NamedQuery(name="User.findUserByEmail", query="select u from User u where u.email = :email")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//public static final String FIND_BY_EMAILPWD = "User.findUserByEmailPwd";
 	public static final String FIND_BY_EMAILPWD = "User.findUserByEmailSaltedpwd";
+	public static final String FIND_BY_EMAIL = "User.findUserByEmail";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

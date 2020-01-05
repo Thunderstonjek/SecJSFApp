@@ -22,10 +22,9 @@ public class StartupBean {
 	public void init() {
 		EntityManagerHelper.init();
 
-		// Create dummy ADMIN user if not exist
 		UserFacade facade = new UserFacade();
-		User u = facade.getUserIfExists("admin", "admin");
-		if (u == null) {
+		// Create dummy ADMIN user if not exist
+		if (!facade.checkIfUserExists("admin")) {
 			UserDAO dao = new UserDAO();
 			EntityManagerHelper.beginTransaction();
 			// dao.save(new User("admin", Hashers.md5("admin"), Role.ADMIN));

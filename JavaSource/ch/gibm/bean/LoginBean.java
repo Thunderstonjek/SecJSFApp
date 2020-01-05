@@ -6,6 +6,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import ch.gibm.dao.EntityManagerHelper;
+import ch.gibm.dao.UserDAO;
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
 import ch.gibm.facade.UserFacade;
@@ -26,8 +28,6 @@ public class LoginBean extends AbstractBean {
 
 	public String login() {
 
-		// HACK
-		// you have to implement a safe login mechanism
 		User user = userFacade.getUserIfExists(this.email, this.password);
 
 		if (user != null) {
@@ -43,6 +43,25 @@ public class LoginBean extends AbstractBean {
 			
 		}
 		return null;
+	}
+	
+	public String register() {
+		if(userFacade.checkIfUserExists(this.email)) {
+			keepDialogOpen();
+			displayErrorMessageToUser("User could not be created.");
+			return null;
+		} else {
+			UserDAO dao = new UserDAO();
+			EntityManagerHelper.beginTransaction();
+			User newuser = new User(this.email, Hashers.sha256WithSalt(this.password, Hashers.generateSalt()), Role.USER);
+			dao.save(newuser);
+			EntityManagerHelper.commitAndCloseTransaction();
+			userBean.setLoggedInUser(newuser);
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+			req.getSession().setAttribute(ATTR_USER, newuser);
+			return "/pages/protected/index.xhtml?faces-redirect=true";
+		}
 	}
 
 	public String getEmail() {

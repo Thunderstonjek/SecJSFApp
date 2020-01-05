@@ -20,5 +20,10 @@ public class UserDAO extends GenericDAO<User> {
 		return super.findOneResult(User.FIND_BY_EMAILPWD, parameters);	
 	}
 
-	//...
+	public boolean checkIfUserExists(String email) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("email", email);
+		
+		return super.findOneResult(User.FIND_BY_EMAIL, parameters) != null;
+	}
 }

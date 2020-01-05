@@ -18,5 +18,10 @@ public class UserFacade implements Serializable{
 		return user;
 	}
 	
-	//...
+	public boolean checkIfUserExists(String email) {
+		EntityManagerHelper.beginTransaction();
+		boolean yes = userDAO.checkIfUserExists(email);
+		EntityManagerHelper.commitAndCloseTransaction();
+		return yes;
+	}
 }

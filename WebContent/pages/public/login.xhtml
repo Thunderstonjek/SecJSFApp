@@ -9,7 +9,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-	<title>Login</title>
+	<title>Login and Register</title>
 	<h:outputStylesheet library="css" name="main.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </h:head>
@@ -20,20 +20,25 @@
 		<p:growl id="loginGrowl" life="3000" />
 	
 		<h:form>
-			<p:dialog header="Login" widgetVar="loginDialogWidget" id="loginDialogId"
+			<p:dialog header="Login and Register" widgetVar="loginDialogWidget" id="loginDialogId"
 				resizable="false" draggable="false" closable="false" visible="true">
 				
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:outputLabel for="email" value="Email:" />
-					<p:inputText id="email" value="#{loginBean.email}" required="true" label="email" />
+					<p:inputText id="email" value="#{loginBean.email}" required="true" requiredMessage="please enter a valid email address." label="email" />
 					
 					<h:outputLabel for="password" value="Password:" />
-	            	<p:password id="password" value="#{loginBean.password}" required="true" label="password" />
+	            	<p:password id="password" value="#{loginBean.password}" required="true" requiredMessage="your password must contain both upper- and lowercase letters." label="password" />
 	            	
 	            	<f:facet name="footer">
 						<p:commandButton value="Login" 
 						update="loginGrowl"
 						action="#{loginBean.login}" 
+						oncomplete="handleLoginResult(xhr, status, args, PF('loginDialogWidget'), 'loginDialogId')"
+						/>
+						<p:commandButton value="Register" 
+						update="loginGrowl"
+						action="#{loginBean.register}" 
 						oncomplete="handleLoginResult(xhr, status, args, PF('loginDialogWidget'), 'loginDialogId')"
 						/>
 	            	</f:facet>  
